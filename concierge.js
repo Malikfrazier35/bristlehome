@@ -11,15 +11,15 @@
  *
  * Configure via data- attributes on the script tag (optional):
  *   <script src="/concierge.js"
- *           data-endpoint="https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge_v5"
+ *           data-endpoint="https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge_v6"
  *           data-title="Concierge"
  *           data-open="true"
  *           defer></script>
  * ===================================================================== */
-
+ 
 (function () {
   "use strict";
-
+ 
   // ---------------------------------------------------------------
   // Config (read from script tag data-attrs, with defaults)
   // ---------------------------------------------------------------
@@ -27,15 +27,15 @@
     const scripts = document.getElementsByTagName("script");
     return scripts[scripts.length - 1];
   })();
-
+ 
   const CONFIG = {
-    endpoint: script.dataset.endpoint || "https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge_v5",
+    endpoint: script.dataset.endpoint || "https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge_v6",
     title: script.dataset.title || "Concierge",
     openOnLoad: script.dataset.open === "true",
     storageKey: "bristlehome_concierge_v1",
     sessionTTLHours: 24,
   };
-
+ 
   // ---------------------------------------------------------------
   // Styles (scoped with .bh-c- prefix to avoid collisions)
   // ---------------------------------------------------------------
@@ -45,7 +45,7 @@
     margin: 0;
     padding: 0;
   }
-
+ 
   #bh-c-root {
     --bh-ink: #0A0A0A;
     --bh-graphite: #1F1F1F;
@@ -58,7 +58,7 @@
     --bh-signal: #C46A36;
     --bh-user-bubble: #0A0A0A;
     --bh-user-text: #FFFFFF;
-
+ 
     font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
     font-feature-settings: "ss01", "cv11";
     position: fixed;
@@ -66,7 +66,7 @@
     bottom: 24px;
     right: 24px;
   }
-
+ 
   /* ============ TRIGGER PILL ============ */
   .bh-c-trigger {
     display: inline-flex;
@@ -111,7 +111,7 @@
     box-shadow: 0 0 0 3px rgba(34,197,94,0.20);
     margin-left: 2px;
   }
-
+ 
   /* ============ PANEL ============ */
   .bh-c-panel {
     position: absolute;
@@ -139,7 +139,7 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-
+ 
   /* ============ HEADER ============ */
   .bh-c-header {
     padding: 18px 20px 16px;
@@ -213,7 +213,7 @@
     line-height: 1;
   }
   .bh-c-close:hover { background: var(--bh-bg); color: var(--bh-ink); }
-
+ 
   /* ============ MESSAGES ============ */
   .bh-c-messages {
     flex: 1;
@@ -234,7 +234,7 @@
     background: var(--bh-line-strong);
     border-radius: 3px;
   }
-
+ 
   .bh-c-msg {
     display: flex;
     flex-direction: column;
@@ -245,7 +245,7 @@
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
+ 
   .bh-c-msg-role {
     font-family: 'Geist Mono', monospace;
     font-size: 0.6rem;
@@ -290,7 +290,7 @@
     color: var(--bh-user-text);
     border-top-right-radius: 2px;
   }
-
+ 
   /* Error message variant */
   .bh-c-msg-error .bh-c-msg-bubble {
     background: rgba(196,106,54,0.06);
@@ -298,7 +298,7 @@
     color: var(--bh-signal);
     font-size: 0.86rem;
   }
-
+ 
   /* ============ TYPING INDICATOR ============ */
   .bh-c-typing {
     display: flex;
@@ -324,7 +324,7 @@
     0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
     30% { opacity: 1; transform: translateY(-2px); }
   }
-
+ 
   /* ============ INPUT ============ */
   .bh-c-input-area {
     border-top: 1px solid var(--bh-line);
@@ -388,7 +388,7 @@
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-
+ 
   /* ============ FOOTER ============ */
   .bh-c-footer {
     padding: 8px 16px 12px;
@@ -420,7 +420,7 @@
     transition: color 0.15s;
   }
   .bh-c-reset:hover { color: var(--bh-signal); }
-
+ 
   /* ============ MOBILE ============ */
   @media (max-width: 520px) {
     #bh-c-root { bottom: 16px; right: 16px; left: 16px; }
@@ -434,13 +434,13 @@
     }
     .bh-c-trigger { align-self: flex-end; }
   }
-
+ 
   /* ============ REDUCED MOTION ============ */
   @media (prefers-reduced-motion: reduce) {
     #bh-c-root * { animation: none !important; transition: none !important; }
   }
   `;
-
+ 
   // ---------------------------------------------------------------
   // State
   // ---------------------------------------------------------------
@@ -450,7 +450,7 @@
     sending: false,
     open: false,
   };
-
+ 
   // Load persisted session
   try {
     const raw = localStorage.getItem(CONFIG.storageKey);
@@ -464,7 +464,7 @@
       }
     }
   } catch (_e) { /* localStorage may be unavailable */ }
-
+ 
   function persist() {
     try {
       localStorage.setItem(CONFIG.storageKey, JSON.stringify({
@@ -474,13 +474,13 @@
       }));
     } catch (_e) { /* ignore */ }
   }
-
+ 
   function clearPersist() {
     try { localStorage.removeItem(CONFIG.storageKey); } catch (_e) { /* ignore */ }
     state.sessionId = null;
     state.messages = [];
   }
-
+ 
   // ---------------------------------------------------------------
   // DOM builders
   // ---------------------------------------------------------------
@@ -503,22 +503,22 @@
     });
     return node;
   }
-
+ 
   function injectStyles() {
     const style = document.createElement("style");
     style.id = "bh-c-styles";
     style.textContent = CSS;
     document.head.appendChild(style);
   }
-
+ 
   // ---------------------------------------------------------------
   // Root + widget
   // ---------------------------------------------------------------
   let rootEl, panelEl, messagesEl, inputEl, sendBtnEl, triggerEl;
-
+ 
   function buildWidget() {
     rootEl = el("div", { id: "bh-c-root", role: "region", "aria-label": "Bristlehome concierge" });
-
+ 
     // Trigger pill
     triggerEl = el("button",
       { class: "bh-c-trigger", type: "button", "aria-label": "Open Bristlehome concierge",
@@ -527,11 +527,11 @@
       document.createTextNode(CONFIG.title),
       el("span", { class: "bh-c-trigger-dot", "aria-hidden": "true" })
     );
-
+ 
     // Panel
     messagesEl = el("div", { class: "bh-c-messages", id: "bh-c-messages",
       role: "log", "aria-live": "polite", "aria-atomic": "false" });
-
+ 
     inputEl = el("textarea", {
       class: "bh-c-input",
       id: "bh-c-input",
@@ -542,12 +542,12 @@
       onKeydown: onInputKeydown,
       onInput: autoSizeInput,
     });
-
+ 
     sendBtnEl = el("button",
       { class: "bh-c-send", type: "button", "aria-label": "Send message", onClick: sendCurrent },
       svgArrowIcon()
     );
-
+ 
     panelEl = el("div",
       { class: "bh-c-panel", role: "dialog", "aria-labelledby": "bh-c-title", "aria-modal": "false" },
       el("header", { class: "bh-c-header" },
@@ -573,12 +573,12 @@
         el("button", { class: "bh-c-reset", type: "button", onClick: resetConversation }, "New conversation")
       )
     );
-
+ 
     rootEl.appendChild(triggerEl);
     rootEl.appendChild(panelEl);
     document.body.appendChild(rootEl);
   }
-
+ 
   function svgArrowIcon() {
     const ns = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(ns, "svg");
@@ -589,7 +589,7 @@
     svg.appendChild(path);
     return svg;
   }
-
+ 
   // ---------------------------------------------------------------
   // Panel open/close
   // ---------------------------------------------------------------
@@ -613,7 +613,7 @@
       triggerEl.style.display = "inline-flex";
     }
   }
-
+ 
   function resetConversation() {
     if (!confirm("Start a new conversation? This will clear your current chat.")) return;
     clearPersist();
@@ -623,7 +623,7 @@
       "May I start with the town you'd like service in?",
       { first: true });
   }
-
+ 
   // ---------------------------------------------------------------
   // Messages
   // ---------------------------------------------------------------
@@ -634,7 +634,7 @@
     renderMessage({ role, text, first: !!opts.first });
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
-
+ 
   function renderAllMessages() {
     messagesEl.innerHTML = "";
     let firstAssistantDone = false;
@@ -645,7 +645,7 @@
     });
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
-
+ 
   function renderMessage(m) {
     const roleClass = m.role === "error" ? "bh-c-msg-error"
                     : m.role === "user" ? "bh-c-msg-user"
@@ -661,7 +661,7 @@
     );
     messagesEl.appendChild(node);
   }
-
+ 
   // ---------------------------------------------------------------
   // Typing indicator
   // ---------------------------------------------------------------
@@ -680,7 +680,7 @@
   function hideTyping() {
     if (typingEl) { typingEl.remove(); typingEl = null; }
   }
-
+ 
   // ---------------------------------------------------------------
   // Input
   // ---------------------------------------------------------------
@@ -691,12 +691,12 @@
     }
     if (e.key === "Escape") togglePanel();
   }
-
+ 
   function autoSizeInput() {
     inputEl.style.height = "auto";
     inputEl.style.height = Math.min(120, inputEl.scrollHeight) + "px";
   }
-
+ 
   async function sendCurrent() {
     const text = (inputEl.value || "").trim();
     if (!text || state.sending) return;
@@ -705,7 +705,7 @@
     addMessage("user", text);
     await callConcierge(text);
   }
-
+ 
   // ---------------------------------------------------------------
   // API
   // ---------------------------------------------------------------
@@ -714,20 +714,20 @@
     sendBtnEl.disabled = true;
     inputEl.disabled = true;
     showTyping();
-
+ 
     try {
       const body = { message: userMessage };
       if (state.sessionId) body.session_id = state.sessionId;
-
+ 
       const resp = await fetch(CONFIG.endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       const data = await resp.json().catch(() => ({}));
-
+ 
       hideTyping();
-
+ 
       if (!resp.ok) {
         if (resp.status === 429) {
           addMessage("error", "We've hit a daily limit on this connection. Please contact our team directly at hello@bristlehome.com or try again tomorrow.");
@@ -740,7 +740,7 @@
         }
         return;
       }
-
+ 
       if (data.session_id) {
         state.sessionId = data.session_id;
       }
@@ -760,7 +760,7 @@
       inputEl.focus();
     }
   }
-
+ 
   // ---------------------------------------------------------------
   // Boot
   // ---------------------------------------------------------------
@@ -770,7 +770,7 @@
     buildWidget();
     if (CONFIG.openOnLoad) togglePanel();
   }
-
+ 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot);
   } else {
