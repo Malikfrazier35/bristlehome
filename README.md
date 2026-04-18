@@ -1,1 +1,1 @@
-"© 2026 1Financial Holding LLC. All rights reserved. Proprietary and confidential."
+Marketing site for Bristlehome LLC. © 2026. All rights reserved.
