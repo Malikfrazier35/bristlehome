@@ -11,7 +11,7 @@
  *
  * Configure via data- attributes on the script tag (optional):
  *   <script src="/concierge.js"
- *           data-endpoint="https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge"
+ *           data-endpoint="https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge_v5"
  *           data-title="Concierge"
  *           data-open="true"
  *           defer></script>
@@ -29,7 +29,7 @@
   })();
 
   const CONFIG = {
-    endpoint: script.dataset.endpoint || "https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge",
+    endpoint: script.dataset.endpoint || "https://uazjhfrybuxuxelcajkk.supabase.co/functions/v1/concierge_v5",
     title: script.dataset.title || "Concierge",
     openOnLoad: script.dataset.open === "true",
     storageKey: "bristlehome_concierge_v1",
