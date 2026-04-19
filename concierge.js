@@ -71,29 +71,29 @@
   .bh-c-trigger {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 18px 12px 14px;
+    gap: 11px;
+    padding: 14px 22px 14px 18px;
     background: var(--bh-ink);
     border: 1px solid var(--bh-ink);
     border-radius: 999px;
     color: #FFFFFF;
     font-family: 'Geist', sans-serif;
-    font-size: 0.84rem;
+    font-size: 0.92rem;
     font-weight: 500;
     letter-spacing: -0.01em;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(10,10,10,0.18), 0 1px 4px rgba(10,10,10,0.12);
+    box-shadow: 0 6px 24px rgba(10,10,10,0.22), 0 2px 8px rgba(10,10,10,0.14);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .bh-c-trigger:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(10,10,10,0.24), 0 2px 6px rgba(10,10,10,0.14);
+    box-shadow: 0 10px 32px rgba(10,10,10,0.28), 0 3px 10px rgba(10,10,10,0.16);
   }
   .bh-c-trigger-mark {
-    width: 22px; height: 22px;
+    width: 24px; height: 24px;
     background: var(--bh-ink);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
@@ -101,15 +101,20 @@
   .bh-c-trigger-mark::before {
     content: '';
     position: absolute;
-    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    top: 6px; left: 6px; right: 6px; bottom: 6px;
     background: repeating-linear-gradient(to right, var(--bh-signal) 0 1px, transparent 1px 3px);
   }
   .bh-c-trigger-dot {
-    width: 6px; height: 6px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: #22C55E;
-    box-shadow: 0 0 0 3px rgba(34,197,94,0.20);
-    margin-left: 2px;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.24), 0 0 0 5px rgba(34,197,94,0.08);
+    margin-left: 4px;
+    animation: bhCPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes bhCPulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.24), 0 0 0 5px rgba(34,197,94,0.08); }
+    50%      { box-shadow: 0 0 0 4px rgba(34,197,94,0.30), 0 0 0 8px rgba(34,197,94,0.10); }
   }
  
   /* ============ PANEL ============ */
@@ -260,8 +265,42 @@
     font-size: 0.92rem;
     line-height: 1.55;
     color: var(--bh-graphite);
-    white-space: pre-wrap;
     word-wrap: break-word;
+    overflow-wrap: anywhere;
+  }
+  /* Markdown-rendered elements inside bubbles */
+  .bh-c-msg-bubble strong { font-weight: 600; color: var(--bh-ink); }
+  .bh-c-msg-bubble em { font-style: italic; }
+  .bh-c-msg-bubble a {
+    color: var(--bh-signal);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    word-break: break-all;
+  }
+  .bh-c-msg-bubble a:hover { color: var(--bh-accent); }
+  .bh-c-msg-bubble p { margin: 0 0 8px; }
+  .bh-c-msg-bubble p:last-child { margin-bottom: 0; }
+  .bh-c-msg-bubble ul {
+    list-style: none;
+    margin: 4px 0;
+    padding: 0;
+  }
+  .bh-c-msg-bubble li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 4px;
+  }
+  .bh-c-msg-bubble li:last-child { margin-bottom: 0; }
+  .bh-c-msg-bubble li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--bh-signal);
   }
   /* Assistant messages */
   .bh-c-msg-assistant {
@@ -271,14 +310,6 @@
     background: var(--bh-bg);
     border: 1px solid var(--bh-line);
     border-top-left-radius: 2px;
-  }
-  /* First assistant message gets italic display font on first line */
-  .bh-c-msg-assistant.bh-c-msg-first .bh-c-msg-bubble::first-line {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.05rem;
-    color: var(--bh-accent);
   }
   /* User messages */
   .bh-c-msg-user {
@@ -398,13 +429,13 @@
     justify-content: space-between;
     align-items: center;
     font-family: 'Geist Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.62rem;
     color: var(--bh-mute);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.04em;
     flex-shrink: 0;
   }
   .bh-c-footer-disclosure {
-    text-transform: uppercase;
+    /* Proper case, no uppercase transform */
   }
   .bh-c-reset {
     background: transparent;
@@ -413,7 +444,6 @@
     font-family: inherit;
     font-size: inherit;
     letter-spacing: inherit;
-    text-transform: uppercase;
     cursor: pointer;
     padding: 2px 4px;
     border-radius: 3px;
@@ -569,7 +599,7 @@
         el("div", { class: "bh-c-input-wrap" }, inputEl, sendBtnEl)
       ),
       el("div", { class: "bh-c-footer" },
-        el("span", { class: "bh-c-footer-disclosure" }, "AI CONCIERGE · OPUS 4.7"),
+        el("span", { class: "bh-c-footer-disclosure" }, "AI Concierge"),
         el("button", { class: "bh-c-reset", type: "button", onClick: resetConversation }, "New conversation")
       )
     );
@@ -654,14 +684,92 @@
                     : m.role === "error" ? "Notice"
                     : "Concierge";
     const firstClass = m.first ? " bh-c-msg-first" : "";
+    const bubble = el("div", { class: "bh-c-msg-bubble" });
+    // Render markdown for assistant/error messages; user messages stay plain text
+    if (m.role === "user") {
+      bubble.textContent = m.text;
+      bubble.style.whiteSpace = "pre-wrap";
+    } else {
+      bubble.innerHTML = renderMarkdown(m.text || "");
+    }
     const node = el("div",
       { class: `bh-c-msg ${roleClass}${firstClass}` },
       el("div", { class: "bh-c-msg-role" }, roleLabel),
-      el("div", { class: "bh-c-msg-bubble" }, m.text)
+      bubble
     );
     messagesEl.appendChild(node);
   }
  
+  // ---------------------------------------------------------------
+  // Lightweight, XSS-safe markdown renderer
+  // Supports: **bold**, *em*, bullet lists ("- item"), paragraph breaks,
+  // auto-linking of http(s) URLs. Everything is HTML-escaped first, then
+  // inline transforms are applied.
+  // ---------------------------------------------------------------
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function renderInline(safe) {
+    // **bold** (must come before single-* emphasis)
+    safe = safe.replace(/\*\*([^*\n]+?)\*\*/g, "<strong>$1</strong>");
+    // *italic* — single asterisk pairs, avoid matching leftover from bold
+    safe = safe.replace(/(^|[^*\w])\*([^*\n]+?)\*(?![*\w])/g, "$1<em>$2</em>");
+    // Auto-link http(s) URLs (URL chars only). Strip trailing punctuation.
+    safe = safe.replace(/https?:\/\/[^\s<>"']+/g, (url) => {
+      let tail = "";
+      // Pull trailing punctuation off (common sentence enders)
+      const m = url.match(/[.,;:!?)\]]+$/);
+      if (m) { tail = m[0]; url = url.slice(0, -tail.length); }
+      return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + "</a>" + tail;
+    });
+    return safe;
+  }
+
+  function renderMarkdown(text) {
+    const escaped = escapeHtml(text.replace(/\r\n/g, "\n").trim());
+    const lines = escaped.split("\n");
+    const out = [];
+    let i = 0;
+    let paraBuf = [];
+    const flushPara = () => {
+      if (!paraBuf.length) return;
+      const joined = paraBuf.join(" ").trim();
+      if (joined) out.push("<p>" + renderInline(joined) + "</p>");
+      paraBuf = [];
+    };
+    while (i < lines.length) {
+      const line = lines[i];
+      const bulletMatch = /^\s*[-*]\s+(.*)$/.exec(line);
+      if (bulletMatch) {
+        flushPara();
+        const items = [];
+        while (i < lines.length) {
+          const bm = /^\s*[-*]\s+(.*)$/.exec(lines[i]);
+          if (!bm) break;
+          items.push("<li>" + renderInline(bm[1]) + "</li>");
+          i++;
+        }
+        out.push("<ul>" + items.join("") + "</ul>");
+        continue;
+      }
+      if (line.trim() === "") {
+        flushPara();
+        i++;
+        continue;
+      }
+      paraBuf.push(line);
+      i++;
+    }
+    flushPara();
+    return out.join("");
+  }
+
   // ---------------------------------------------------------------
   // Typing indicator
   // ---------------------------------------------------------------
