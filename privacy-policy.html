@@ -363,7 +363,7 @@
   <h1 class="legal-title">Privacy <em>Policy</em></h1>
   <div class="legal-meta">
     <span>Effective: April 18, 2026</span>
-    <span>Last Updated: April 18, 2026</span>
+    <span>Last Updated: April 19, 2026</span>
     <span>Bristlehome LLC · Waterbury, Connecticut</span>
   </div>
 </div>
@@ -380,7 +380,7 @@
       <li><a href="#p5">How We Share Information</a></li>
       <li><a href="#p6">Cookies &amp; Analytics</a></li>
       <li><a href="#p7">Data Retention</a></li>
-      <li><a href="#p8">Connecticut Privacy Rights</a></li>
+      <li><a href="#p8">Your Privacy Rights</a></li>
       <li><a href="#p9">Data Security</a></li>
       <li><a href="#p10">Children's Privacy</a></li>
       <li><a href="#p11">Changes to this Policy</a></li>
@@ -391,7 +391,7 @@
   <main>
     <div class="highlight-box">
       <strong>Plain-English summary</strong>
-      <p>We collect only what we need to book your cleaning and communicate with you. We never sell your data. Card payments are handled by our payment processor — we don't store your full card number. You can ask us to delete your data at any time.</p>
+      <p>We collect only what we need to book your cleaning and communicate with you. We never sell your data. Card payments are handled by Stripe — we don't store your full card number. Chat messages with our AI concierge are PII-scrubbed before storage; IP addresses are hashed, not kept raw. Old data is automatically deleted on a monthly schedule, and you can ask us to delete your information at any time by emailing <a href="mailto:privacy@bristlehome.com">privacy@bristlehome.com</a>.</p>
     </div>
 
     <section class="legal-section" id="p1">
@@ -408,6 +408,10 @@
         <li><strong>Service address:</strong> the property where you'd like us to clean</li>
         <li><strong>Home details:</strong> bedrooms, bathrooms, square footage, access instructions, preferences</li>
         <li><strong>Booking preferences:</strong> service type, frequency, date, time window, any special requests or add-ons</li>
+        <li><strong>Chat messages with our AI concierge:</strong> the text you send and receive when using the chat on our website. We scrub apparent payment card numbers, bank routing numbers, and similar sensitive identifiers from messages before storage, and never knowingly retain such data</li>
+        <li><strong>Concierge session identifiers:</strong> a random identifier stored in your browser for up to 24 hours so the concierge can maintain conversation context</li>
+        <li><strong>Hashed IP address:</strong> we compute a one-way hash of your IP address combined with a daily rotating salt for rate-limiting and abuse prevention. We do not retain raw IP addresses</li>
+        <li><strong>Technical metadata:</strong> approximate browser, device, and referring page, used for troubleshooting and product improvement</li>
         <li><strong>Payment information:</strong> handled by our payment processor — see Section 4 below</li>
         <li><strong>Communications:</strong> messages you send us (email, text, phone) and notes we make about your service</li>
       </ul>
@@ -440,7 +444,15 @@
       <p>We share personal information only in the following limited situations:</p>
       <ul>
         <li><strong>Our cleaners:</strong> the cleaner(s) assigned to your home receive your address, access instructions, and relevant preferences so they can perform the service</li>
-        <li><strong>Service providers:</strong> payment processors, hosting providers, email and SMS providers, scheduling software, and similar vendors who operate parts of our infrastructure</li>
+        <li><strong>Service providers (sub-processors):</strong> we rely on a small number of reputable vendors, each bound by contractual data protection obligations:
+          <ul>
+            <li><strong>Stripe, Inc.</strong> — payment processing and card tokenization (PCI DSS certified)</li>
+            <li><strong>Supabase, Inc.</strong> — managed database and server infrastructure (hosted in AWS us-west-2)</li>
+            <li><strong>Anthropic, PBC</strong> — large-language-model provider powering the AI concierge</li>
+            <li><strong>Resend</strong> — transactional email delivery (booking confirmations, receipts)</li>
+            <li><strong>Vercel, Inc.</strong> — web hosting and content delivery</li>
+          </ul>
+        </li>
         <li><strong>Legal compliance:</strong> when required by law, subpoena, or valid government request; or to protect the safety, rights, or property of Bristlehome, our clients, or our cleaners</li>
         <li><strong>Business transfers:</strong> if Bristlehome is acquired, merged, or sells assets, customer data may transfer to the new owner under terms at least as protective as this Policy</li>
       </ul>
@@ -455,33 +467,46 @@
 
     <section class="legal-section" id="p7">
       <h2 data-num="07">Data Retention</h2>
-      <p>We keep your information only as long as we reasonably need it:</p>
+      <p>We keep your information only as long as we reasonably need it. An automated cleanup job runs on the first day of each month and removes data that has exceeded the periods below:</p>
       <ul>
-        <li><strong>Active client records:</strong> while you remain an active client and for 3 years after your last service</li>
-        <li><strong>Booking history &amp; invoices:</strong> 7 years, for tax and accounting purposes</li>
+        <li><strong>Chat concierge sessions:</strong> 12 months after your last message</li>
+        <li><strong>Security event logs:</strong> 12 months</li>
+        <li><strong>Notification logs (email and SMS records):</strong> 6 months</li>
+        <li><strong>Inquiries that did not result in a paid booking:</strong> 24 months, after which the record is marked deleted</li>
+        <li><strong>Paid booking history &amp; invoices:</strong> 7 years, for tax and accounting obligations</li>
+        <li><strong>Payment and webhook records:</strong> 7 years, as required for financial record retention</li>
         <li><strong>Marketing communications:</strong> until you unsubscribe</li>
-        <li><strong>Inquiries that did not result in a booking:</strong> 12 months</li>
       </ul>
-      <p>When a retention period ends, we delete or anonymize the information unless a longer period is required by law.</p>
+      <p>When a retention period ends, we delete or anonymize the information unless a longer period is required by law. Every cleanup run is logged internally so we can verify the policy is being enforced. You can also ask us to delete your information earlier — see Section 8.</p>
     </section>
 
     <section class="legal-section" id="p8">
-      <h2 data-num="08">Connecticut Privacy Rights</h2>
-      <p>If you are a Connecticut resident, the Connecticut Data Privacy Act (CTDPA) gives you the right to:</p>
+      <h2 data-num="08">Your Privacy Rights</h2>
+      <p>Depending on where you live, different privacy laws give you different rights. Regardless of jurisdiction, we honor the core rights below for every client who asks:</p>
       <ul>
-        <li><strong>Access:</strong> confirm whether we process your personal data, and obtain a copy</li>
-        <li><strong>Correct:</strong> ask us to correct inaccurate information</li>
-        <li><strong>Delete:</strong> ask us to delete your personal information</li>
-        <li><strong>Portability:</strong> receive a copy of your data in a usable format</li>
-        <li><strong>Opt-out:</strong> opt out of targeted advertising, profiling, or sale of your data (we don't do any of these, but the right still exists)</li>
+        <li><strong>Access:</strong> confirm whether we process your personal data and receive a copy of what we hold</li>
+        <li><strong>Correct:</strong> ask us to correct inaccurate or incomplete information</li>
+        <li><strong>Delete:</strong> ask us to delete your personal data (subject to records we are legally required to keep, such as paid invoices)</li>
+        <li><strong>Portability:</strong> receive your data in a common, machine-readable format</li>
+        <li><strong>Opt-out:</strong> opt out of any targeted advertising, profiling, or sale of your data. We do not sell personal data and we do not engage in behavioral advertising</li>
       </ul>
-      <p>To exercise any of these rights, email us at the address in Section 12 below. We will respond within 45 days as required by Connecticut law. There is no fee to exercise your rights unless a request is unfounded or excessive.</p>
-      <p>If we decline a request, you may appeal. If our response to your appeal is unsatisfactory, you may contact the Connecticut Attorney General's Office at <a href="https://portal.ct.gov/ag" target="_blank" rel="noopener">portal.ct.gov/ag</a>.</p>
+      <p>These rights are specifically protected under the Connecticut Data Privacy Act (CTDPA) if you are a Connecticut resident. If you are a California resident, the California Consumer Privacy Act (CCPA) and CPRA give you substantially the same rights plus the right to limit the use of sensitive personal information. If you are in the European Economic Area or the United Kingdom, the General Data Protection Regulation (GDPR) also applies; we rely primarily on contractual necessity and legitimate interest as lawful bases of processing.</p>
+      <p><strong>How to exercise your rights:</strong> email <a href="mailto:privacy@bristlehome.com">privacy@bristlehome.com</a> with your request. We will verify your identity using information you have previously given us and respond within thirty (30) days. Once verified, a deletion request is processed through our automated cleanup system, which cascades across our chat logs, session records, notification history, and lead records. Paid transaction records are retained where required by law, but we will remove all personally identifying contact information from the retained records.</p>
+      <p>If you are dissatisfied with our response, you may appeal by replying to our decision. For Connecticut residents, you may also contact the Connecticut Attorney General at <a href="https://portal.ct.gov/ag">portal.ct.gov/ag</a>.</p>
     </section>
 
     <section class="legal-section" id="p9">
       <h2 data-num="09">Data Security</h2>
-      <p>We use reasonable administrative, technical, and physical safeguards to protect your information, including TLS encryption in transit, limited internal access, strong passwords, and secure third-party processors for payments and hosting.</p>
+      <p>We use reasonable administrative, technical, and physical safeguards to protect your information. These include, among others:</p>
+      <ul>
+        <li>TLS encryption in transit, with HTTP Strict Transport Security (HSTS) enforced for two years</li>
+        <li>A Content Security Policy that restricts what other websites our pages will talk to</li>
+        <li>PII scrubbing on chat messages before storage — we detect and redact apparent card numbers (Luhn-validated), bank routing numbers, and other sensitive identifiers</li>
+        <li>Hashing of IP addresses with a rotating daily salt, so raw addresses are never retained</li>
+        <li>Cryptographic signature verification on every payment webhook we receive from our payment processor, protecting against forged payment events</li>
+        <li>Secrets and API keys stored in Supabase Vault (encrypted at rest), never in source code</li>
+        <li>Limited internal access, strong passwords, and multi-factor authentication on administrative accounts</li>
+      </ul>
       <p>No system is perfectly secure. If we ever detect a breach that materially affects your personal information, we will notify you as required by Connecticut law.</p>
     </section>
 
